@@ -22,7 +22,7 @@ namespace TheGStore.Models
 
         public List<string> CustNames { get; set; }
 
-        public List<string> CustSurnames { get; set; }
+        public List<string> CustLastNames { get; set; }
 
         public List<string> CustEmails { get; set; }
 

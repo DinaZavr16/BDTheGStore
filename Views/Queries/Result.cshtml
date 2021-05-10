@@ -4,7 +4,7 @@
     ViewData["Title"] = "Результат";
 }
 
-<h1>Результат</h1>
+<h1>Результат Запиту</h1>
 <hr />
 
 @if (string.IsNullOrEmpty(Model.Error))
@@ -39,7 +39,7 @@
                             @Model.CustNames[i]
                         </td>
                         <td>
-                            @Model.CustSurnames[i]
+                            @Model.CustLastNames[i]
                         </td>
                     </tr>
                 }
@@ -140,6 +140,7 @@
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 @for (int i = 0; i < Model.DevNames.Count; i++)
                 {
@@ -191,11 +192,11 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.CustSurnames.Count; i++)
+                @for (int i = 0; i < Model.CustLastNames.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Model.CustSurnames[i]
+                            @Model.CustLastNames[i]
                         </td>
                     </tr>
                 }
@@ -219,11 +220,11 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.CustSurnames.Count; i++)
+                @for (int i = 0; i < Model.CustLastNames.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Model.CustSurnames[i]
+                            @Model.CustLastNames[i]
                         </td>
                         <td>
                             @Model.CustEmails[i]
@@ -244,37 +245,22 @@
 }
 else
 {
-    <p style="font-size:20px">
-        Результат запиту порожній.
-        <br />
-        Будь ласка, спробуйте ще раз з іншим параметром.
+    <p style="font-size:40px">
+        Нічого не знайдено =(
     </p>
 }
 
-<table>
-    <tr>
-        <td>
-            <form method="get" asp-controller="Queries" asp-action="Index">
-                <input type="submit" class="btn btn-primary" value="Назад до запитів" />
-            </form>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            <form method="get" asp-controller="Home" asp-action="Index">
-                <input type="submit" class="btn btn-primary" value="На головну" />
-            </form>
-        </td>
-    </tr>
-</table>
+
+<form method="get" asp-controller="Queries" asp-action="Index">
+    <input type="submit" class="btn btn-primary" value="Назад" />
+</form>
 
 
 <div class="modal fade" id="error" tabindex="-1" role="alertdialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Повідомлення</h5>
+                <h5 class="modal-title">Сповіщення</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -283,7 +269,7 @@ else
                 @Model.Error
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">ОК</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Далі</button>
             </div>
         </div>
     </div>

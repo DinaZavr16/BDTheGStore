@@ -1,50 +1,70 @@
-﻿@{
-    ViewData["Title"] = "Головна";
-}
+﻿@{ ViewData["Title"] = "Головна"; }
+<br />
+<br />
+<br />
+<br />
 
 <div class="text-center">
     <h1 class="display-4">The Grassman's Store</h1>
-    <p>Купи - не пожалеешь</p>
+    <p style="font-size: 24px">Купи - не пожалеешь</p>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+    <form class="col-4" method="get" asp-controller="Developers" asp-action="Index">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Розробники" />
+        </p>
+    </form>
+
+    <form class="col-4" method="get" asp-controller="Games" asp-action="Index" asp-route-id="0">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Ігри" />
+        </p>
+    </form>
+
+    <form class="col-4" method="get" asp-controller="Customers" asp-action="Index">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Покупці" />
+        </p>
+    </form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
+    <form class="col-4" method="get" asp-controller="Orders" asp-action="Index" asp-route-id="0">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Покупки" />
+        </p>
+    </form>
+
+    <form class="col-4" method="get" asp-controller="Countries" asp-action="Index">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Країни" />
+        </p>
+    </form>
+
+    <form class="col-4" method="get" asp-controller="Genres" asp-action="Index">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Жанри" />
+        </p>
+    </form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
+    <form class="col-12" method="get" asp-controller="Queries" asp-action="Index">
+        <p align="center">
+            <input type="submit" class="btn btn-primary btn-lg" style="width: 100%" value="Запити" />
+        </p>
+    </form>
 </div>
 
-<form method="get" asp-controller="Developers" asp-action="Index">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Розробники" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Games" asp-action="Index" asp-route-id="0">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Ігри" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Customers" asp-action="Index">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Покупці" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Orders" asp-action="Index" asp-route-id="0">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Покупки" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Countries" asp-action="Index">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Країни" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Genres" asp-action="Index">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Жанри" />
-    </p>
-</form>
-
-<form method="get" asp-controller="Queries" asp-action="Index">
-    <p align="center">
-        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Запити" />
-    </p>
-</form>

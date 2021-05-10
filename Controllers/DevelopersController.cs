@@ -20,6 +20,13 @@ namespace Waresoft.Controllers
             _context = context;
         }
 
+        public JsonResult Test()
+        {
+            var result = _context.Developers.Include("Games").Where(x => x.Games.Count > 3);
+
+            return new JsonResult(result.ToList());
+        }
+
         // GET: Developers
         public async Task<IActionResult> Index()
         {

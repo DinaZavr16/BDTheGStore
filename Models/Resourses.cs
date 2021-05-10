@@ -19,11 +19,11 @@
         #endregion Regular expresions
 
         #region Query errors
-        public const string ERROR_AVG_PRICE = "Неможливо обрахувати середню ціну, оскільки продукти відсутні.";
-        public const string ERROR_CUSTOMERS = "Покупці, що задовольняють дану умову, відсутні.";
-        public const string ERROR_GAME_NOT_EXISTS = "Програмні продукти, що задовольняють дану умову, відсутні.";
-        public const string ERROR_DEV_NOT_EXISTS = "Розробники, що задовольняють дану умову, відсутні.";
-        public const string ERROR_COUNTRY_NOT_EXISTS = "Країни, що задовольняють дану умову, відсутні.";
+        public const string ERROR_AvgPrice = "Неможливо обрахувати середню ціну, оскільки продукти відсутні.";
+        public const string ERROR_CustomersNotFound = "Покупці, що задовольняють дану умову, відсутні.";
+        public const string ERROR_GameNotExists = "Програмні продукти, що задовольняють дану умову, відсутні.";
+        public const string ERROR_DevNotExists = "Розробники, що задовольняють дану умову, відсутні.";
+        public const string ERROR_CountryNotExists = "Країни, що задовольняють дану умову, відсутні.";
         #endregion Query errors
     }
 }

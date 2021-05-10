@@ -100,7 +100,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Прізвище покупця П</label>
-                <select asp-for="CustSurname" asp-items="@ViewBag.CustSurnames" class="form-control"></select>
+                <select asp-for="CustLastNames" asp-items="@ViewBag.CustLastNames" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">Email покупця Е</label>
@@ -124,14 +124,14 @@
     <div class="col-md-4">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <form asp-action="SimpleQuery5">
-            <input type="hidden" asp-for="ProdName" value="dummy"/>
+            <input type="hidden" asp-for="ProdName" value="dummy" />
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input maxlength="28" id="price" asp-for="Price" class="form-control"/>
+                <input maxlength="28" id="price" asp-for="Price" class="form-control" />
                 <span class="text-danger">@ViewBag.PriceError</span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Надіслати" class="btn btn-success" onclick="submit5()"/>
+                <input type="submit" value="Надіслати" class="btn btn-success" onclick="submit5()" />
             </div>
         </form>
     </div>

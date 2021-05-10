@@ -8,14 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using TheGStore;
 using TheGStore.Models;
 
 namespace TheGStore.Controllers
 {
     public class QueriesController : Controller
     {
-        public IConfiguration Configuration { get; }
-
         private const string S1_PATH = @"C:\Users\dinaf\OneDrive\Рабочий стол\BD.TheGStore-main\Queries\S1.sql";
         private const string S2_PATH = @"C:\Users\dinaf\OneDrive\Рабочий стол\BD.TheGStore-main\Queries\S2.sql";
         private const string S3_PATH = @"C:\Users\dinaf\OneDrive\Рабочий стол\BD.TheGStore-main\Queries\S3.sql";
@@ -30,8 +29,7 @@ namespace TheGStore.Controllers
         private const string T1_PATH = @"C:\Users\dinaf\OneDrive\Рабочий стол\BD.TheGStore-main\Queries\T1.sql";
         private const string T2_PATH = @"C:\Users\dinaf\OneDrive\Рабочий стол\BD.TheGStore-main\Queries\T2.sql";
 
-       
-        
+        public IConfiguration Configuration { get; }
         private readonly TheGStoreDbContext _context;
 
         public QueriesController(TheGStoreDbContext context, IConfiguration configuration)
@@ -59,11 +57,11 @@ namespace TheGStore.Controllers
             var anyDevs = _context.Developers.Any();
 
             ViewBag.DevIds = anyDevs ? new SelectList(_context.Developers, "Id", "Id") : empty;
-            ViewBag.DevNames = anyDevs ? new SelectList(_context.Developers, "FirstName", "FirstName") : empty;
+            ViewBag.DevNames = anyDevs ? new SelectList(_context.Developers, "Name", "Name") : empty;
             ViewBag.CustNames = anyCusts ? new SelectList(customers) : empty;
             ViewBag.CustEmails = anyCusts ? new SelectList(_context.Customers, "Email", "Email") : empty;
-            ViewBag.CustSurnames = anyCusts ? new SelectList(_context.Customers, "LastName", "LastName") : empty;
-            ViewBag.Countries = _context.Countries.Any() ? new SelectList(_context.Countries, "FirstName", "FirstName") : empty;
+            ViewBag.CustLastNames = anyCusts ? new SelectList(_context.Customers, "LastName", "LastName") : empty;
+            ViewBag.Countries = _context.Countries.Any() ? new SelectList(_context.Countries, "Name", "Name") : empty;
             return View();
         }
 
@@ -92,7 +90,7 @@ namespace TheGStore.Controllers
                     else
                     {
                         queryModel.ErrorFlag = 1;
-                        queryModel.Error = Resourses.ERROR_AVG_PRICE;
+                        queryModel.Error = Resourses.ERROR_AvgPrice;
                     }
                 }
                 connection.Close();
@@ -111,7 +109,7 @@ namespace TheGStore.Controllers
 
             queryModel.QueryId = "S2";
             queryModel.CustNames = new List<string>();
-            queryModel.CustSurnames = new List<string>();
+            queryModel.CustLastNames = new List<string>();
 
             using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
             {
@@ -125,14 +123,14 @@ namespace TheGStore.Controllers
                         while (reader.Read())
                         {
                             queryModel.CustNames.Add(reader.GetString(0));
-                            queryModel.CustSurnames.Add(reader.GetString(1));
+                            queryModel.CustLastNames.Add(reader.GetString(1));
                             flag++;
                         }
 
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_CUSTOMERS;
+                            queryModel.Error = Resourses.ERROR_CustomersNotFound;
                         }
                     }
                 }
@@ -151,8 +149,8 @@ namespace TheGStore.Controllers
             query = query.Replace('\t', ' ');
 
             queryModel.QueryId = "S3";
-            queryModel.ProdNames= new List<string>();
-            queryModel.ProdPrices= new List<decimal>();
+            queryModel.ProdNames = new List<string>();
+            queryModel.ProdPrices = new List<decimal>();
 
             using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
             {
@@ -173,7 +171,7 @@ namespace TheGStore.Controllers
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_GAME_NOT_EXISTS;
+                            queryModel.Error = Resourses.ERROR_GameNotExists;
                         }
                     }
                 }
@@ -188,7 +186,7 @@ namespace TheGStore.Controllers
         {
             string query = System.IO.File.ReadAllText(S4_PATH);
             query = query.Replace("X", "N\'" + queryModel.CustName + "\'");
-            query = query.Replace("Y", "N\'" + queryModel.CustSurname + "\'");
+            query = query.Replace("Y", "N\'" + queryModel.CustLastNames + "\'");
             query = query.Replace("Z", "N\'" + queryModel.CustEmail + "\'");
             query = query.Replace("\r\n", " ");
             query = query.Replace('\t', ' ');
@@ -214,7 +212,7 @@ namespace TheGStore.Controllers
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_DEV_NOT_EXISTS;
+                            queryModel.Error = Resourses.ERROR_DevNotExists;
                         }
                     }
                 }
@@ -255,7 +253,7 @@ namespace TheGStore.Controllers
                             if (flag == 0)
                             {
                                 queryModel.ErrorFlag = 1;
-                                queryModel.Error = Resourses.ERROR_DEV_NOT_EXISTS;
+                                queryModel.Error = Resourses.ERROR_DevNotExists;
                             }
                         }
                     }
@@ -297,7 +295,7 @@ namespace TheGStore.Controllers
                             if (flag == 0)
                             {
                                 queryModel.ErrorFlag = 1;
-                                queryModel.Error = Resourses.ERROR_DEV_NOT_EXISTS;
+                                queryModel.Error = Resourses.ERROR_DevNotExists;
                             }
                         }
                     }
@@ -338,7 +336,7 @@ namespace TheGStore.Controllers
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_COUNTRY_NOT_EXISTS;
+                            queryModel.Error = Resourses.ERROR_CountryNotExists;
                         }
                     }
                 }
@@ -356,7 +354,7 @@ namespace TheGStore.Controllers
             query = query.Replace("\r\n", " ");
             query = query.Replace('\t', ' ');
             queryModel.QueryId = "A2";
-            queryModel.CustSurnames = new List<string>();
+            queryModel.CustLastNames = new List<string>();
 
             using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
             {
@@ -369,14 +367,14 @@ namespace TheGStore.Controllers
                         int flag = 0;
                         while (reader.Read())
                         {
-                            queryModel.CustSurnames.Add(reader.GetString(0));
+                            queryModel.CustLastNames.Add(reader.GetString(0));
                             flag++;
                         }
 
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_CUSTOMERS;
+                            queryModel.Error = Resourses.ERROR_CustomersNotFound;
                         }
                     }
                 }
@@ -392,7 +390,7 @@ namespace TheGStore.Controllers
             query = query.Replace("\r\n", " ");
             query = query.Replace('\t', ' ');
             queryModel.QueryId = "A3";
-            queryModel.CustSurnames = new List<string>();
+            queryModel.CustLastNames = new List<string>();
             queryModel.CustEmails = new List<string>();
 
             using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
@@ -406,7 +404,7 @@ namespace TheGStore.Controllers
                         int flag = 0;
                         while (reader.Read())
                         {
-                            queryModel.CustSurnames.Add(reader.GetString(0));
+                            queryModel.CustLastNames.Add(reader.GetString(0));
                             queryModel.CustEmails.Add(reader.GetString(1));
                             flag++;
                         }
@@ -414,7 +412,7 @@ namespace TheGStore.Controllers
                         if (flag == 0)
                         {
                             queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_CUSTOMERS;
+                            queryModel.Error = Resourses.ERROR_CustomersNotFound;
                         }
                     }
                 }
