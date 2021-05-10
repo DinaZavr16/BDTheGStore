@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Головна";
+}
+
+<div class="text-center">
+    <h1 class="display-4">The Grassman's Store</h1>
+    <p>Купи - не пожалеешь</p>
+</div>
+
+<form method="get" asp-controller="Developers" asp-action="Index">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Розробники" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Games" asp-action="Index" asp-route-id="0">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Ігри" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Customers" asp-action="Index">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Покупці" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Orders" asp-action="Index" asp-route-id="0">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Покупки" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Countries" asp-action="Index">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Країни" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Genres" asp-action="Index">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Жанри" />
+    </p>
+</form>
+
+<form method="get" asp-controller="Queries" asp-action="Index">
+    <p align="center">
+        <input type="submit" class="btn btn-primary btn-lg" style="width:200px" value="Запити" />
+    </p>
+</form>
