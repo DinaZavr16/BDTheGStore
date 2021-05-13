@@ -1,13 +1,9 @@
 SELECT Developers.name
 FROM Developers
 WHERE Developers.id IN
-	(SELECT Software.developerId
-	 FROM Software
-	 WHERE Software.id IN
-	 	(SELECT Purchases.softwareId
-		 FROM Purchases
-		 WHERE Purchases.customerId IN
-		 	(SELECT Customers.id
-			 FROM Customers
-			 WHERE Customers.name = X AND Customers.surname = Y
-			 AND Customers.email = Z)));
+	(SELECT Games.developerId
+	 FROM Games
+	 WHERE Games.GenreId IN
+		(SELECT Genres.id
+		 FROM Genres
+		 WHERE Genres.name = X));

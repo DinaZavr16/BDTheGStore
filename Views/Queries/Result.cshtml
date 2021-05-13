@@ -9,13 +9,13 @@
 
 @if (string.IsNullOrEmpty(Model.Error))
 {
-    @if (Model.QueryId.Equals("S1"))
+    @if (Model.QueryId.Equals("S3"))
     {
         <p style="font-size:20px">
-            <b>Середня ціна продуктів розробника @Model.DevName:</b> @decimal.Round(Model.AvgPrice, 2, MidpointRounding.AwayFromZero)
+            <b>Мінімальна ціна продуктів розробника @Model.DevName:</b> @decimal.Round(Model.MinPrice, 2, MidpointRounding.AwayFromZero)
         </p>
     }
-    else if (Model.QueryId.Equals("S2"))
+    else if (Model.QueryId.Equals("S5"))
     {
         <p style="font-size:20px">
             <b>Покупці, що придбали хоча б один продукт розробника @Model.DevName</b>
@@ -24,29 +24,23 @@
             <thead>
                 <tr>
                     <th>
-                        Ім'я
-                    </th>
-                    <th>
-                        Прізвище
+                        Email
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.CustNames.Count; i++)
+                @for (int i = 0; i < Model.CustEmails.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Model.CustNames[i]
-                        </td>
-                        <td>
-                            @Model.CustLastNames[i]
+                            @Model.CustEmails[i]
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     }
-    else if (Model.QueryId.Equals("S3"))
+    else if (Model.QueryId.Equals("S1"))
     {
         <p style="font-size:20px">
             <b>Назви та ціни всіх програмних продуктів усіх розробників із країни @Model.CountryName</b>
@@ -80,7 +74,7 @@
     else if (Model.QueryId.Equals("S4"))
     {
         <p style="font-size:20px">
-            <b>Імена розробників усіх програмних продуктів, придбаних покупцем з ім'ям @Model.CustName, прізвищем @Model.CustSurname та email-ом @Model.CustEmail</b>
+            <b>Імена розробників  у яких є ігри жанра @Model.GenreName</b>
         </p>
         <table class="table">
             <thead>
@@ -102,10 +96,10 @@
             </tbody>
         </table>
     }
-    else if (Model.QueryId.Equals("S5"))
+    else if (Model.QueryId.Equals("S2"))
     {
         <p style="font-size:20px">
-            <b>Імена розробників, які продають продукти ціною не @Model.Price у.о.</b>
+            <b>Імена розробників, які продають продукти ціною не більше @Model.Price у.о.</b>
         </p>
         <table class="table">
             <thead>
@@ -130,7 +124,7 @@
     else if (Model.QueryId.Equals("S6"))
     {
         <p style="font-size:20px">
-            <b>Імена розробників, які не продають продукти з назвою @Model.ProdName</b>
+            <b>Знайти жанри ігор, які не продає розробник @Model.DevName</b>
         </p>
         <table class="table">
             <thead>
@@ -142,11 +136,11 @@
             </thead>
 
             <tbody>
-                @for (int i = 0; i < Model.DevNames.Count; i++)
+                @for (int i = 0; i < Model.GenreNames.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Model.DevNames[i]
+                            @Model.GenreNames[i]
                         </td>
                     </tr>
                 }

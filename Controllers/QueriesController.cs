@@ -62,6 +62,7 @@ namespace TheGStore.Controllers
             ViewBag.CustEmails = anyCusts ? new SelectList(_context.Customers, "Email", "Email") : empty;
             ViewBag.CustLastNames = anyCusts ? new SelectList(_context.Customers, "LastName", "LastName") : empty;
             ViewBag.Countries = _context.Countries.Any() ? new SelectList(_context.Countries, "Name", "Name") : empty;
+            ViewBag.Genres = _context.Countries.Any() ? new SelectList(_context.Genres, "Name", "Name") : empty;
             return View();
         }
 
@@ -71,84 +72,11 @@ namespace TheGStore.Controllers
         public IActionResult SimpleQuery1(Query queryModel)
         {
             string query = System.IO.File.ReadAllText(S1_PATH);
-            query = query.Replace("P", "N\'" + queryModel.DevName + "\'");
-            query = query.Replace("\r\n", " ");
-            query = query.Replace('\t', ' ');
-
-            queryModel.QueryId = "S1";
-
-            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(query, connection))
-                {
-                    var result = command.ExecuteScalar();
-                    if (result != DBNull.Value)
-                    {
-                        queryModel.AvgPrice = Convert.ToDecimal(result);
-                    }
-                    else
-                    {
-                        queryModel.ErrorFlag = 1;
-                        queryModel.Error = Resourses.ERROR_AvgPrice;
-                    }
-                }
-                connection.Close();
-            }
-            return RedirectToAction("Result", queryModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SimpleQuery2(Query queryModel)
-        {
-            string query = System.IO.File.ReadAllText(S2_PATH);
-            query = query.Replace("X", "N\'" + queryModel.DevName + "\'");
-            query = query.Replace("\r\n", " ");
-            query = query.Replace('\t', ' ');
-
-            queryModel.QueryId = "S2";
-            queryModel.CustNames = new List<string>();
-            queryModel.CustLastNames = new List<string>();
-
-            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.ExecuteNonQuery();
-                    using (var reader = command.ExecuteReader())
-                    {
-                        int flag = 0;
-                        while (reader.Read())
-                        {
-                            queryModel.CustNames.Add(reader.GetString(0));
-                            queryModel.CustLastNames.Add(reader.GetString(1));
-                            flag++;
-                        }
-
-                        if (flag == 0)
-                        {
-                            queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_CustomersNotFound;
-                        }
-                    }
-                }
-                connection.Close();
-            }
-            return RedirectToAction("Result", queryModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SimpleQuery3(Query queryModel)
-        {
-            string query = System.IO.File.ReadAllText(S3_PATH);
             query = query.Replace("K", "N\'" + queryModel.CountryName + "\'");
             query = query.Replace("\r\n", " ");
             query = query.Replace('\t', ' ');
 
-            queryModel.QueryId = "S3";
+            queryModel.QueryId = "S1";
             queryModel.ProdNames = new List<string>();
             queryModel.ProdPrices = new List<decimal>();
 
@@ -182,57 +110,16 @@ namespace TheGStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SimpleQuery4(Query queryModel)
-        {
-            string query = System.IO.File.ReadAllText(S4_PATH);
-            query = query.Replace("X", "N\'" + queryModel.CustName + "\'");
-            query = query.Replace("Y", "N\'" + queryModel.CustLastNames + "\'");
-            query = query.Replace("Z", "N\'" + queryModel.CustEmail + "\'");
-            query = query.Replace("\r\n", " ");
-            query = query.Replace('\t', ' ');
-
-            queryModel.QueryId = "S4";
-            queryModel.DevNames = new List<string>();
-
-            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.ExecuteNonQuery();
-                    using (var reader = command.ExecuteReader())
-                    {
-                        int flag = 0;
-                        while (reader.Read())
-                        {
-                            queryModel.DevNames.Add(reader.GetString(0));
-                            flag++;
-                        }
-
-                        if (flag == 0)
-                        {
-                            queryModel.ErrorFlag = 1;
-                            queryModel.Error = Resourses.ERROR_DevNotExists;
-                        }
-                    }
-                }
-                connection.Close();
-            }
-            return RedirectToAction("Result", queryModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SimpleQuery5(Query queryModel)
+        public IActionResult SimpleQuery2(Query queryModel)
         {
             if (ModelState.IsValid)
             {
-                string query = System.IO.File.ReadAllText(S5_PATH);
+                string query = System.IO.File.ReadAllText(S2_PATH);
                 query = query.Replace("P", queryModel.Price.ToString());
                 query = query.Replace("\r\n", " ");
                 query = query.Replace('\t', ' ');
 
-                queryModel.QueryId = "S5";
+                queryModel.QueryId = "S2";
                 queryModel.DevNames = new List<string>();
 
                 using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
@@ -266,15 +153,48 @@ namespace TheGStore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SimpleQuery6(Query queryModel)
+        public IActionResult SimpleQuery3(Query queryModel)
+        {
+            string query = System.IO.File.ReadAllText(S3_PATH);
+            query = query.Replace("P", "N\'" + queryModel.DevName + "\'");
+            query = query.Replace("\r\n", " ");
+            query = query.Replace('\t', ' ');
+
+            queryModel.QueryId = "S3";
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    var result = command.ExecuteScalar();
+                    if (result != DBNull.Value)
+                    {
+                        queryModel.MinPrice = Convert.ToDecimal(result);
+                    }
+                    else
+                    {
+                        queryModel.ErrorFlag = 1;
+                        queryModel.Error = Resourses.ERROR_AvgPrice;
+                    }
+                }
+                connection.Close();
+            }
+            return RedirectToAction("Result", queryModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SimpleQuery4(Query queryModel)
         {
             if (ModelState.IsValid)
             {
-                string query = System.IO.File.ReadAllText(S6_PATH);
-                query = query.Replace("X", "N\'" + queryModel.ProdName + "\'");
+                string query = System.IO.File.ReadAllText(S4_PATH);
+                query = query.Replace("X", "N\'" + queryModel.GenreName.ToString() + "\'");
                 query = query.Replace("\r\n", " ");
                 query = query.Replace('\t', ' ');
-                queryModel.QueryId = "S6";
+
+                queryModel.QueryId = "S4";
                 queryModel.DevNames = new List<string>();
 
                 using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
@@ -303,8 +223,85 @@ namespace TheGStore.Controllers
                 }
                 return RedirectToAction("Result", queryModel);
             }
+            return RedirectToAction("Index", new { errorCode = 1 });
+        }
 
-            return RedirectToAction("Index", new { errorCode = 2 });
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SimpleQuery5(Query queryModel)
+        {
+            string query = System.IO.File.ReadAllText(S5_PATH);
+            query = query.Replace("X", "N\'" + queryModel.DevName + "\'");
+            query = query.Replace("\r\n", " ");
+            query = query.Replace('\t', ' ');
+
+            queryModel.QueryId = "S5";
+            queryModel.CustEmails = new List<string>();
+
+
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.ExecuteNonQuery();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        int flag = 0;
+                        while (reader.Read())
+                        {
+                            queryModel.CustEmails.Add(reader.GetString(0));
+                            flag++;
+                        }
+
+                        if (flag == 0)
+                        {
+                            queryModel.ErrorFlag = 1;
+                            queryModel.Error = Resourses.ERROR_CustomersNotFound;
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return RedirectToAction("Result", queryModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SimpleQuery6(Query queryModel)
+        {
+                string query = System.IO.File.ReadAllText(S6_PATH);
+                query = query.Replace("P", "N\'" + queryModel.DevName + "\'");
+                query = query.Replace("\r\n", " ");
+                query = query.Replace('\t', ' ');
+                queryModel.QueryId = "S6";
+                queryModel.GenreNames = new List<string>();
+
+                using (var connection = new SqlConnection(Configuration.GetConnectionString("DefaultConnection")))
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        using (var reader = command.ExecuteReader())
+                        {
+                            int flag = 0;
+                            while (reader.Read())
+                            {
+                                queryModel.GenreNames.Add(reader.GetString(0));
+                                flag++;
+                            }
+
+                            if (flag == 0)
+                            {
+                                queryModel.ErrorFlag = 1;
+                                queryModel.Error = Resourses.ERROR_DevNotExists;
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+                return RedirectToAction("Result", queryModel);
         }
 
         [HttpPost]

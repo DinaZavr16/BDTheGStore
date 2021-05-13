@@ -7,10 +7,10 @@ WHERE Countries.id IN
 		(SELECT D.id
 		 FROM Developers D
 		 WHERE NOT EXISTS
-	 		((SELECT Software.price
-			  FROM Software
-		      WHERE Software.developerId = K)
+	 		((SELECT Games.price
+			  FROM Games
+		      WHERE Games.developerId = K)
 		     EXCEPT
-		     (SELECT Software.price
-		      FROM Software
-		      WHERE Software.developerId = D.id AND Software.developerId != K))));
+		     (SELECT Games.price
+		      FROM Games
+		      WHERE Games.developerId = D.id AND Games.developerId != K))));

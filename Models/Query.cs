@@ -18,7 +18,7 @@ namespace TheGStore.Models
 
         public string CountryName { get; set; }
 
-        public decimal AvgPrice { get; set; }
+        public decimal MinPrice { get; set; }
 
         public List<string> CustNames { get; set; }
 
@@ -49,5 +49,7 @@ namespace TheGStore.Models
         public int DevId { get; set; }
 
         public List<string> CountryNames { get; set; }
+        public List<string> GenreNames { get; set; }
+        public string GenreName { get; set; }
     }
 }

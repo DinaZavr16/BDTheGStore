@@ -1,6 +1,9 @@
-SELECT Developers.name
-FROM Developers
-WHERE Developers.id NOT IN
-	(SELECT Software.developerId
-	 FROM Software
-	 WHERE Software.name = X);
+SELECT Genres.name
+FROM Genres
+WHERE Genres.id NOT IN
+	(SELECT Games.GenreId
+	 FROM Games
+	 WHERE Games.developerId IN
+	 (SELECT Developers.id
+		 FROM Developers
+		 WHERE Developers.name = P));

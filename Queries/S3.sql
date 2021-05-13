@@ -1,9 +1,6 @@
-SELECT Software.name, Software.price
-FROM Software
-WHERE Software.developerId IN
+SELECT MIN(Games.price)
+FROM Games
+WHERE Games.developerId IN
 	(SELECT Developers.id
 	 FROM Developers
-	 WHERE Developers.countryId IN
-	 	(SELECT Countries.id
-		 FROM Countries
-		 WHERE Countries.name = K));
+	 WHERE Developers.name = P);

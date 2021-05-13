@@ -1,17 +1,17 @@
-SELECT C.surname, C.email
+SELECT C.lastname, C.email
 FROM Customers C
-WHERE C.name = Y
+WHERE C.firstName = Y
 AND NOT EXISTS
-	((SELECT Purchases.softwareId
-	  FROM Purchases
-	  WHERE Purchases.customerId = C.id)
+	((SELECT Orders.gameId
+	  FROM Orders
+	  WHERE Orders.customerId = C.id)
 	 EXCEPT
-	 (SELECT Software.id
-	  FROM Software))
+	 (SELECT Games.id
+	  FROM Games))
 AND NOT EXISTS
-	((SELECT Software.id
-	  FROM Software)
+	((SELECT Games.id
+	  FROM Games)
 	 EXCEPT
-	 (SELECT Purchases.softwareId
-	  FROM Purchases
-	  WHERE Purchases.customerId = C.id));
+	 (SELECT Orders.gameId
+	  FROM Orders
+	  WHERE Orders.customerId = C.id));
