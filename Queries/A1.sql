@@ -1,7 +1,4 @@
-SELECT Countries.name
-FROM Countries
-WHERE Countries.id IN
-	(SELECT Developers.countryId
+SELECT Developers.name
 	 FROM Developers
 	 WHERE Developers.id IN
 		(SELECT D.id
@@ -13,4 +10,4 @@ WHERE Countries.id IN
 		     EXCEPT
 		     (SELECT Games.price
 		      FROM Games
-		      WHERE Games.developerId = D.id AND Games.developerId != K))));
+		      WHERE Games.developerId = D.id AND Games.developerId != K)));
